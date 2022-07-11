@@ -1,5 +1,7 @@
 <?php 
 require_once 'classe/usuarios.php';
+require_once 'config.php';
+
 $u = new Usuario();
 ?>
 <!DOCTYPE html>
@@ -20,31 +22,7 @@ $u = new Usuario();
         <a href="cadastrar.php">Ainda não é inscrito? cadastre-se</a>
     </form>
     <?php 
-        // verifica se clicou no botao/ENVIOU O VALOR NOME
-        if(isset($_POST['email'])){
-            $email = addslashes($_POST['email']);
-            $senha = addslashes($_POST['senha']);
-        
-            // verificar se nao esta vazio/foi preenchido
-            if(!empty($email) && !empty($senha)){
-                $u->conectar("test","localhost","root","");
-                if($u->msgErro == ""){
-                    // se estiver certo envia para a pagina privada
-                    if($u->logar($email, $senha)){
-                        // echo 'teste123';
-                        header("location: areaprivada.php");
-                        echo 'apos location';
-                    }else{
-                        echo 'email e/ou senha incorretos';
-                    }
-                }else{
-                    echo 'erro: '.$u->msgErro;
-                }
-                
-            }else{
-                echo 'preencha todos os campos';
-            }
-        }
+        $u->ifLogar();
     ?>
 </body>
 </html>
